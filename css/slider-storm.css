@@ -1,4 +1,6 @@
-		// Redefinição do componente Slider Original
+		/**
+			CSS Storm for redefine original details of Slider.
+		**/
 		#slider {
 			width: 90%;
 		}
@@ -7,16 +9,19 @@
   			border: 1px solid #D7D7D7;
 			
 		}
-		// Redefinição do Slider Cursor
+
 		.ui-state-default {
 		  border: 1px solid #9B9B9B;
 		}
 
+		/**
+			CSS Storm for component details.
+		**/
 		div.max {
 			font-family: Arial;
 			font-size: 12px;
 			text-align: right;
-			margin-right: 9%;
+			margin-right: 10%;
 			margin-top: 5px;
 			display: block;
 		}
@@ -27,30 +32,17 @@
 			margin-top: 2px;
 			display: block;
 		}
-		.reset{
-			color: #fff;
-  			background-color: #428bca;
-  			border-color: #357ebd;
-			margin-top: 5px;
-			display: inline-block;
-  		 	margin-bottom: 0;
-  			font-weight: 400;
-  			text-align: center;
-  			vertical-align: middle;
-  			cursor: pointer;
-  			background-image: none;
-  			border: 1px solid transparent;
-  			white-space: nowrap;
-  			padding: 6px 12px;
-  			font-size: 14px;
-  			line-height: 1.428571429;
-  			border-radius: 4px;
-  			-webkit-user-select: none;
-		}
 
 		.label {
 			font-family: Arial;
 			font-size: 14px;
+		}
+
+		.label-manual-input {
+			font-family: Arial;
+			font-size: 14px;
+			float:left;
+			margin-top: 2%;
 		}
 
 		.default-font { 
@@ -67,10 +59,11 @@
 			border:0; 
 			color:#f6931f; 
 			font-weight:bold;
-		}
+		}    	
 
 		.input-size {
-  			height: 28px;
+			float:left;
+  			height: 21px;
   			border-radius: 4px;
   			border: 1px solid #ccc;
   			padding: 6px 12px;
@@ -78,3 +71,38 @@
 			font-size: 14px;
   			line-height: 1.428571429;
 		}
+
+		.send{
+			float:left;
+			margin-left: 5px;
+			color: #fff;
+  			background-color: #428bca;
+  			border-color: #357ebd;
+			display: inline-block;
+  			cursor: pointer;
+  			background-image: none;
+  			border: 1px solid transparent;
+  			white-space: nowrap;
+  			padding: 6px 12px;
+  			font-size: 14px;
+  			line-height: 1.428571429;
+  			border-radius: 4px;
+  			-webkit-user-select: none;
+		}
+
+		.reset{
+			color: #fff;
+  			background-color: #428bca;
+  			border-color: #357ebd;
+			margin-top: 5px;
+  			cursor: pointer;
+  			background-image: none;
+  			border: 1px solid transparent;
+  			white-space: nowrap;
+  			padding: 6px 12px;
+  			font-size: 14px;
+  			line-height: 1.428571429;
+  			border-radius: 4px;
+  			-webkit-user-select: none;
+		}
+

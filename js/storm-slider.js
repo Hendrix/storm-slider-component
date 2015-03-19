@@ -63,12 +63,14 @@
 		var sliderStormComponentSliderSizeSelected 		= '<input type="text" id="valor-size" readonly /></p>'; 
 		var sliderStormComponentDivSliderAndDivMax 		= '<div id="slider" /></div><div class="max" /></div>'; 
 		var sliderStormComponentInputReset 				= '<input class= "reset" type="reset" value="Reiniciar" />';	
-		var sliderStormComponentLabelSizeManual 			= '<p><label class="label" for="valor-size">ou se preferir digite aqui (MB) :</label>';
+		var sliderStormComponentLabelSizeManual 		= '<p><label class="label-manual-input" for="valor-size">ou se preferir digite aqui (MB) :</label>';
 		var sliderStormComponentInputSizeManual 		= '<input class="input-size" type="text" size="15" /></p>';
+		var sliderStormComponentInputSend				= '<input class="send" type="reset" value="Enviar" />';	
 
 
 		var fullHtmlComponent 		= sliderStormComponentLabel + sliderStormComponentSliderSizeSelected + sliderStormComponentDivSliderAndDivMax 
-		+ sliderStormComponentInputReset  + sliderStormComponentLabelSizeManual + sliderStormComponentInputSizeManual;
+		+ sliderStormComponentInputReset  + sliderStormComponentLabelSizeManual + sliderStormComponentInputSizeManual + 
+		sliderStormComponentInputSend;
 
    		$( "#slider-storm" ).html(fullHtmlComponent);	
 
