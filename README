@@ -1,0 +1,23 @@
+README
+============================================================================================
+
+Para utilizar o componente de Slider, basta inserir a seguinte TAG em seu Html : 
+
+<div id="slider-storm">     
+</div> 
+
+E em seus imports de js e css certificar que foram importados os seguintes recursos : 
+
+  <!-- DEPENDÊNCIAS JS & CSS -->
+  <script src="js/jquery-1.10.2.js"></script>
+  <script src="js/jquery-ui.js"></script>
+
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <link rel="stylesheet" href="css/jquery-style.css">
+
+  <!-- STORM CSS & JS -->
+  <link rel="stylesheet" href="css/slider-storm.css">
+  <script src="js/storm-slider.js"></script>  
+
+
+
