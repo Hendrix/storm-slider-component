@@ -1,7 +1,8 @@
+		// Redefinição do componente Slider Original
 		#slider {
 			width: 90%;
 		}
-		// Redefinição do componente Slider
+
 		.ui-widget-content {
   			border: 1px solid #D7D7D7;
 			
