@@ -42,7 +42,7 @@
 			font-family: Arial;
 			font-size: 14px;
 			float:left;
-			margin-top: 1.50%;
+			margin-top: 0.8%;
 		}	
 
 
@@ -60,6 +60,7 @@
 			border:0; 
 			color:#f6931f; 
 			font-weight:bold;
+			margin-left: 3px;
 		}    	
 
 		.input-size {

@@ -47,19 +47,91 @@
 	var ENVIROMENTS = {};
 
 	/**
+		ENVIROMENTS_API_URL : Contém estrutura para armazenar os ambientes : local, dev e prod do nfsaas como chave 
+		e tendo como valor os hosts da api.
+	**/
+	var ENVIROMENTS_API_URL = {};
+
+	/**
 		value_selected : Armazena valor final selecionado na Slider e também utilizado para preencher o input.
 	**/
 	var value_selected = 100;
 
+	/**
+		apiUrl : Contém Url do Host da Nfsaas-api para o ambiente atual.
+	**/	
+	var apiUrl = "";
+
 	loadHtmlSliderStorm();
 	startSliderWidget();
+	//playground();
+		
+
+	/**
+		playground : Função para validação e testes locais...
+	**/		
+	function playground() {
+
+		console.log("Playground");
+	}
+
+	/**
+		loadMaxValueIfExistsOnNetApp : Método que que recupera caso exista o valor máximo da cota para um volume.
+	**/
+	function loadMaxValueIfExistsOnNetAppFromReportEndPoint() {
+
+		var data = getSomeIdFromUrlInNfsaas("export");
+		var nfsaas_api_report_resource = "report/{export_id}";
+
+   		/**$.get(
+    		apiUrl + nfsaas_api_report_resource,
+    		data, // id do export/qtree que deseja saber o valor atual de quota.
+    		function(data) 
+    		{ 
+    			
+    		},
+    		"html"
+		);**/
+
+	}
+
+	/**
+		loadMaxValueIfExistsOnNetApp : Método que que recupera caso exista o valor máximo da cota para um volume.
+	**/
+	function callQuotaSetForVolume() {
+
+		var data = getSomeIdFromUrlInNfsaas("export");
+		var nfsaas_api_report_resource = "report/{export_id}";
+
+   		/**$.get(
+    		apiUrl + nfsaas_api_report_resource,
+    		data, // id do export/qtree que deseja saber o valor atual de quota.
+    		function(data) 
+    		{ 
+    			
+    		},
+    		"html"
+		);**/
+
+	}
+
+	/**
+		getSomeIdFromUrlInNfsaas : Método utilitário para recuperar um determinado ID a partir da URL
+		REST que é montada no Nfsaas.
+	**/
+	function getSomeIdFromUrlInNfsaas(element) {
+
+		var urlDecomposed = url.split('/');
+		var indexElementInUrl = urlDecomposed.indexOf(element);
+		return urlDecomposed[indexElementInUrl + 1];
+	}
 
 	/**
 		loadHtmlSliderStorm : Método que inicializa Html completo do componente.
 	**/
 	function loadHtmlSliderStorm() {
 
-		var sliderStormComponentLabel 					= '<p><label class="label" for="valor-size">Selecione o tamanho da qtree abaixo:</label>'; 
+		var sliderStormComponentLabel 					= '<p><label class="label" for="valor-size">Selecione a quota abaixo:</label>'; 
 		var sliderStormComponentSliderSizeSelected 		= '<input type="text" id="valor-size" readonly /></p>'; 
 		var sliderStormComponentDivSliderAndDivMax 		= '<div id="slider" /></div><div class="max" /></div>'; 
 		var sliderStormComponentInputReset 				= '<input class= "reset" type="reset" value="Reiniciar" />';	
@@ -82,6 +154,9 @@
 	**/
 	function startSliderWidget() {
 		initializeEnviroments();
+		initializeEnviromentsApiUrl();		
+		getApiUrlForEnviroments();
+		//loadMaxValueIfExistsOnNetApp();
 		initializeSizesUrls();
 		initializeMaxRangeMBData();
 		initializeMaxRangeGBData();
@@ -101,6 +176,17 @@
 		ENVIROMENTS["local"]  = "localhost";
 		ENVIROMENTS["dev"]    = "nfsaas.dev.globoi.com";
 		ENVIROMENTS["prod"]   = "nfsaas.globoi.com";
+	}
+
+	/**
+		initializeEnviromentsApiUrl : Responsável por instanciar os valores dados o dominio do nfsaas : local, dev e prod,
+		qual host da nfsaas-api será chamado.
+
+	**/
+	function initializeEnviromentsApiUrl() { 
+		ENVIROMENTS_API_URL["local"]  = "localhost:8888";
+		ENVIROMENTS_API_URL["dev"]    = "nfsaas-api.cloud.globoi.com";
+		ENVIROMENTS_API_URL["prod"]   = "nfsaas-api.cloud.globoi.com";
 	}
 
 	/**
@@ -147,6 +233,23 @@
 		$(".input-size").val(value_selected);
 	}
 
+
+	function getApiUrlForEnviroments(){
+		
+		if (checkContentInUrl(url, ENVIROMENTS["local"])) {
+			apiUrl = ENVIROMENTS_API_URL["local"];
+		}	
+
+
+		if (checkContentInUrl(url, ENVIROMENTS["dev"])) {
+			apiUrl = ENVIROMENTS_API_URL["dev"];
+		}	
+
+		if (checkContentInUrl(url, ENVIROMENTS["prod"])) {
+			apiUrl = ENVIROMENTS_API_URL["prod"];
+		}	
+
+	}
 	/**
 		convert_megabyte_in_kbyte : Dado uma seleção de sizes/quota em mbytes realiza a conversão para kbytes,
 		unidade utilizada na NETAPP para quotas.
@@ -223,7 +326,7 @@
 		if (checkContentInUrl(url, ENVIROMENTS["local"]))
 		{
 			// DEFAULT - até 1GB 
-			slider_max_value = MAX_RANGE_IN_MB["1GB"];
+			slider_max_value = MAX_RANGE_IN_MB["50GB"];
 		}
 
 	}
@@ -253,8 +356,8 @@
         		$(".input-size").val(sliderStepMap[ui.value]);
       		}
     	});
-		
-		$( "#valor-size" ).val( sliderStepMap[$( "#slider" ).slider( "value")]  + " (MB)");
+
+		$( "#valor-size" ).val( sliderStepMap[$("#slider").slider("value")]  + " (MB)");
 	}
 
 	/**
@@ -331,15 +434,7 @@
 		
 	**/
 	$( ".reset" ).click(function() {
-		initializeEnviroments();
-		initializeSizesUrls();
-		initializeMaxRangeMBData();
-		initializeMaxRangeGBData();
-		set_slide_bar_range(url);
-		load_max_range_preview();
-		set_steps_values(slider_max_value);
-		initialize_slider_values();	
-		set_default_size_for_input();
+		startSliderWidget();
 	});
 
   });
