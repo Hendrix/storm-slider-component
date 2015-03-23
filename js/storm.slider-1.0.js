@@ -5,8 +5,8 @@ var StormSlider = StormSlider || {};
 
     var options = {
         quotaSetBtnClass: ".input-size",
-        nfsaasReportUrl: "/export/report",
-        nfsaasQuotaSetUrl: "/export/quotaset",
+        nfsaasReportUrl: "/quota",
+        nfsaasQuotaSetUrl: "/quota",
         slider_max_value: "1024",
         sliderStepMap : [0, 100, 200,300,400,500,600,700,800,900,1000, 1024],
         value_selected : 100,
@@ -27,7 +27,8 @@ var StormSlider = StormSlider || {};
             set_steps_values(options.slider_max_value);            
             initialize_slider_values();            
             load_max_range_preview();
-            //set_default_size_for_input();
+            //quota_get();
+            //quota_set();
             reset_widget();
         });
  
@@ -63,21 +64,21 @@ var StormSlider = StormSlider || {};
     function set_steps_values(slider_max_value) {
 
         switch (slider_max_value) {
-            case options.slider_max_value: // Step for each 100mb
+            case "1024": // Step for each 100mb
                 sliderStepMap = [0, 100, 200,300,400,500,600,700,800,900,1000, 1024];
                 break;
-        /**    case MAX_RANGE_IN_MB["5GB"]: // Step for each 200mb
+            case "5120": // Step for each 200mb
                 sliderStepMap = [0, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400, 2600, 2800, 3000, 3200, 3400, 3600, 3800,4000, 4200, 4400, 4600, 4800, 5000, 5120]
                 break;
-            case MAX_RANGE_IN_MB["10GB"]: // Step for each 500mb
+            case "10240": // Step for each 500mb
                 sliderStepMap = [0, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500,10000, 10240]
                 break;
-            case MAX_RANGE_IN_MB["20GB"]: // Step for each 1000mb
+            case "20480": // Step for each 1000mb
                 sliderStepMap = [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000,20000, 20480]
                 break;
-            case MAX_RANGE_IN_MB["50GB"]: // Step for each 5000mb
+            case "51200": // Step for each 5000mb
                 sliderStepMap = [0, 5000, 10000, 20000, 30000, 40000, 50000]
-                break; **/
+                break; 
         }
 
         return sliderStepMap;
@@ -134,15 +135,44 @@ var StormSlider = StormSlider || {};
     }
 
 
-    /**function quota_set(url) {
+    /**
+        quota_get : Recupera a quota para o export.
+        
+    **/
+    function quota_get(url) {
+        $.ajax({
+            type: "GET",
+            url: options.nfsaasReportUrl
+            }).done(function(data) {
+                window.location.href = options.nfsaasReportUrl + "/" + data;
+                //loadHtmlReportCall(data.disk-limit, disk-used);
+        });
+    }
+
+    /**
+        quota_set : Defina a quota para o export.
+        
+    **/
+    function quota_set(url) {
         $.ajax({
             type: "POST",
-            url: url
+            url: options.nfsaasQuotaSetUrl
         }).done(function(data) {
-            window.location.href = options.nfsaasQuotaSetUrl +"/"+ data.job
+            //window.location.href = options.nfsaasQuotaSetUrl +"/"+ data.job
+            console.log("Data == ");
             console.log(data);
         });
-    }**/
+    }
+
+    /**
+        loadHtmlReportCall : Método que trata retorno da chamada de report e carrega o html.
+    **/
+    function loadHtmlReportCall(limit,used) {
+
+        var fullHtmlReport       = '<table><tr><th>Disk-Limit</th><th>Disk-Used</th></tr><tr><td>' + limit + '</td><td>' + used + '</td></tr></table>';
+        
+        $(document.createElement('div')).addClass("slider-report").html(fullHtmlReport).appendTo($("#slider-storm"));
+    }
 
 
     /**
