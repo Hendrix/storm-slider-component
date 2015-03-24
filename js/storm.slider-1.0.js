@@ -4,14 +4,13 @@ var StormSlider = StormSlider || {};
 (function(window, $) {
 
     var options = {
-        quotaSetBtnClass: ".input-size",
-        nfsaasReportUrl: "/quota",
-        nfsaasQuotaSetUrl: "/quota",
-        slider_max_value: "1024",
-        sliderStepMap : [0, 100, 200,300,400,500,600,700,800,900,1000, 1024],
-        value_selected : 100,
-        slider_min_value : 0,
-        slider_default_value_idx : 1,
+        quotaSetBtnClass: ".input-size", // Valor final a ser enviado no Form
+        nfsaasApiQuotaUrl: "/quota",     // Url do Nfsaas-api para quota
+        slider_max_value: "1024",        // Valor Máximo do Slider..ambiente x tamanho..
+        sliderStepMap : [0, 100, 200,300,400,500,600,700,800,900,1000, 1024], // Steps dado o valor máximo 
+        value_selected : 100,            // Valor default do component Slider
+        slider_min_value : 0,            // Valor mínimo do component Slider   
+        slider_default_value_idx : 1,    // Indice dos steps
     };
 
     function init(opts) {
@@ -142,7 +141,7 @@ var StormSlider = StormSlider || {};
     function quota_get(url) {
         $.ajax({
             type: "GET",
-            url: options.nfsaasReportUrl
+            url: options.nfsaasApiQuotaUrl
             }).done(function(data) {
                 window.location.href = options.nfsaasReportUrl + "/" + data;
                 //loadHtmlReportCall(data.disk-limit, disk-used);
@@ -156,7 +155,7 @@ var StormSlider = StormSlider || {};
     function quota_set(url) {
         $.ajax({
             type: "POST",
-            url: options.nfsaasQuotaSetUrl
+            url: options.nfsaasApiQuotaUrl
         }).done(function(data) {
             //window.location.href = options.nfsaasQuotaSetUrl +"/"+ data.job
             console.log("Data == ");
